@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version  }
+TMPDIR=${TMPDIR:-/tmp}
+[ -n "$ASDF_INSTALL_VERSION" ] || (>&2 echo 'Missing ASDF_INSTALL_VERSION' && exit 1)
+[ -n "$ASDF_INSTALL_PATH" ] || (>&2 echo 'Missing ASDF_INSTALL_PATH' && exit 1)
+
+install_kubefedctl() {
+  local install_type=$1
+  local version=$2
+  local install_path=$3
+
+  local bin_install_path="$install_path/bin"
+  local bin_path="$bin_install_path/kubefedctl"
+  local filename="$(get_filename $version)"
+  local download_url="$(get_download_url $version $filename)"
+  local tmp_path="$TMPDIR/kubefedctl_install"
+  local tmp_file="$tmp_path/$filename"
+
+  if [ "$install_type" != "version" ]; then
+    echoerr "Cannot install specific ref from source, sorry."
+    echoerr "For a list of available versions, see \`asdf list-all kubefedctl\`"
+    exit 1
+  fi
+
+  mkdir -p "${bin_install_path}"
+  mkdir -p "${tmp_path}"
+
+  echo "Downloading kubefedctl from ${download_url}"
+  curl -s -L "$download_url" -o "$tmp_file"
+  tar xf "${tmp_file}" -C "${bin_install_path}"
+  rm -rf "${tmp_path}"
+  chmod +x "${bin_path}"
+}
+
+get_filename() {
+  local version=$1
+  local arch="$(get_arch)" 
+  echo "kubefedctl-${version}-${arch}-amd64.tgz"
+}
+
+get_arch() {
+  uname | tr '[:upper:]' '[:lower:]'
+}
+
+get_download_url() {
+  local version=$1
+  local filename=$2
+  echo "https://github.com/kubernetes-sigs/kubefed/releases/download/v${version}/${filename}"
+}
+
+install_kubefedctl "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
