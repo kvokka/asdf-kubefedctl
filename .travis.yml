@@ -1,8 +1,11 @@
 language: c
 script: asdf plugin-test kubefedctl https://github.com/kvokka/asdf-kubefedctl.git
 before_script:
-  - git clone https://github.com/asdf-vm/asdf.git
-  - . asdf/asdf.sh
+- git clone https://github.com/asdf-vm/asdf.git
+- ". asdf/asdf.sh"
 os:
-  - linux
-  - osx
+- linux
+- osx
+env:
+  global:
+    secure: f/isAMuVTjQg8UxQBKmeZimwwr3XhU/C/+0Co/iCaYHXOWyD4h3PlNhhqdOaXNrB2qPTXZMgXa1rr5jh3IqDZiyz4CWDoU0cfl2yLokje/6O+XZ3sRmiWUMpyOmZdVynu7ukPvYtocMyMcquTS0uk4T9U2xOA0JPQfp15oVfOJaV9kQaK0wa3i9wkUAoBBq+6jZzU0VtlnlUgnPcS5NBXO87pJgyz5cwGDyDrQEqnVVk6JqaCo4Yn8puqpHJhdvaj3grLP925NQr1MpXqBhfzqXebz8rBzbgcU1VO2zKyceZr6Fe4AZ09CEXo3S682rwCLq0sIUEKgAIn0lRlcjDVErCRD/yCvpdH0ti3mLeoK1LWsXbDhNa3+M//H7DufY54d8MoufgipRkx2LFDusJfoYtmA0w07BtIW/MlY4l5Mkpc013Q1HdEbP9R/I2kBSaZqcNK/1PnNn5/4VTA0GuUo/g5GOstggb1u84I8Ta+bAr1p52Zymo7BE1TDfFfLILj/7ERlV505PGXMYGV2S2EnirrEgCE3Mo2H2gSwOjnDFFc2qRCOdXL/vvQrzL2x47Npk6I+tMhtuXOuj+Dn6aHcM4gPgLGpQyMWVCLq7SJIKNWqgrY752maLlm2MvXCua/PxrxSSURXJSeXKbebMR8+4+Fz/VdA8mnOGvWA6e8wg=
